@@ -1,0 +1,72 @@
+FROM ubuntu:18.04
+
+# RUN chown -R node:node /usr/local/lib/node_modules /app
+# USER root
+
+RUN apt-get update -y
+RUN apt-get install -y software-properties-common curl
+
+RUN curl -sL https://deb.nodesource.com/setup_10.x -o /tmp/nodesource_setup.sh
+RUN bash /tmp/nodesource_setup.sh
+RUN apt-get update -y
+RUN apt install -y nodejs
+
+
+########## GO ##########
+RUN add-apt-repository -y ppa:gophers/archive
+RUN apt-get update -y
+RUN apt-get install -y build-essential golang-1.10-go
+ENV PATH=$PATH:/usr/lib/go-1.10/bin
+
+
+RUN apt-get install -y software-properties-common
+
+
+########## ETHEREUM ##########
+#RUN add-apt-repository -y ppa:ethereum/ethereum
+#RUN apt-get update -y
+#RUN apt-get install -y ethereum
+
+
+########## SOLIDITY ##########
+# RUN npm install -g solc:0.4.24
+# RUN add-apt-repository -y ppa:ethereum/ethereum
+# RUN apt-get update -y
+# RUN apt-get install -y solc:0.4.24
+RUN curl -o /usr/bin/solc -fL https://github.com/ethereum/solidity/releases/download/v0.4.24/solc-static-linux \
+    && chmod a+x /usr/bin/solc
+
+
+WORKDIR /home/node/app
+RUN apt-get install -y git
+RUN git clone https://github.com/vsmelov/MARKETProtocol.git#tmp/try-to-make-it-work  # clone this repository
+
+
+########## GETH ##########
+#RUN git clone https://github.com/ethereum/go-ethereum
+#RUN cd go-ethereum && make geth
+#ENV PATH=$PATH:/home/node/app/go-ethereum/build/bin
+
+
+########## NODE USER TRICK ##########
+RUN useradd -ms /bin/bash node
+RUN chown -R node:node /home/node
+USER node
+RUN mkdir /home/node/.npm-global
+ENV PATH=/home/node/.npm-global/bin:$PATH
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+
+
+
+RUN cd MARKETProtocol && make install_truffle
+RUN cd MARKETProtocol && make install_deps
+
+#RUN cd ethereum-bridge && npm install
+
+
+# cd /home/node/app/MARKETProtocol && make start_console
+# cd /home/node/app/MARKETProtocol && make start_bridge
+# geth --testnet console  --rpc --rpccorsdomain="*" --rpcaddr="127.0.0.1" --rpcport="9545"
+
+# truffle(develop)> migrate --reset
+# truffle(develop)> test
