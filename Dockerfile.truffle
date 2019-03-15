@@ -40,6 +40,7 @@ RUN curl -o /usr/bin/solc -fL https://github.com/ethereum/solidity/releases/down
 WORKDIR /home/node/app
 RUN apt-get install -y git
 RUN git clone --single-branch --branch tmp/try-to-make-it-work https://github.com/vsmelov/MARKETProtocol.git
+RUN git clone https://github.com/MARKETProtocol/ethereum-bridge.git
 
 
 ########## GETH ##########
