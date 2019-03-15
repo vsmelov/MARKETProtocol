@@ -1,5 +1,41 @@
 <img src="https://github.com/MARKETProtocol/dApp/blob/master/src/img/MARKETProtocol-Light.png?raw=true" align="middle">
 
+# My Readme
+
+### build
+
+```
+git clone --single-branch --branch tmp/try-to-make-it-work https://github.com/vsmelov/MARKETProtocol.git
+cd MARKETProtocol
+docker build -t my/market-protocol .
+```
+
+### run tests
+
+You will need two terminals
+
+1. in first
+
+```
+docker run -ti my/market-protocol bash
+cd /home/node/app/MARKETProtocol && make start_console
+```
+
+2. in second
+
+```
+docker exec -ti my/market-protocol ...
+cd /home/node/app/MARKETProtocol && make start_bridge
+```
+
+3. in first
+```
+truffle(develop)> migrate --reset
+truffle(develop)> test
+```
+
+# Original Readme
+
 
 [![Build Status](https://travis-ci.org/MARKETProtocol/MARKETProtocol.svg?branch=master)](https://travis-ci.org/MARKETProtocol/MARKETProtocol) [![Coverage Status](https://coveralls.io/repos/github/MARKETProtocol/MARKETProtocol/badge.svg?branch=master&service=github)](https://coveralls.io/github/MARKETProtocol/MARKETProtocol?branch=master) [![npm version](https://badge.fury.io/js/%40marketprotocol%2Fmarketprotocol.svg)](https://badge.fury.io/js/%40marketprotocol%2Fmarketprotocol)
 
