@@ -15,6 +15,5 @@ truffle-config.js
 truffle.js
 .sol*
 .travis.yml
-.env.sample
 .git
 .gitignore

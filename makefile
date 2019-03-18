@@ -35,7 +35,7 @@ start_console:
 
 # start ethereum bridge
 start_bridge:
-	cd $(EB_PATH) ; node bridge -H localhost:9545 -a 9 --dev
+	cd $(EB_PATH) ; node bridge -H $(TRUFFLE_DEVELOP_HOST):$(TRUFFLE_DEVELOP_PORT) -a 9 --dev
 
 #
 # truffle console commands

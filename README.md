@@ -17,15 +17,21 @@ You will need two terminals
 1. in first
 
 ```
-docker run -ti my/market-protocol bash
+docker network create -d bridge --subnet 192.168.0.0/24 --gateway 192.168.0.1 hostnet
+
+docker run --name=truffle-container -ti my/market-protocol bash
 cd /home/node/app/MARKETProtocol && make start_console
+
+
+docker run --network=hostnet --name=truffle-container -e TRUFFLE_DEVELOP_HOST=192.168.0.1 -e TRUFFLE_DEVELOP_PORT=8545 -ti my/market-protocol truffle console --network=development
 ```
 
 2. in second
 
 ```
-docker exec -ti my/market-protocol ...
-cd /home/node/app/MARKETProtocol && make start_bridge
+docker exec -ti truffle-container make start_bridge
+
+docker exec -e TRUFFLE_DEVELOP_HOST=192.168.0.1 -e TRUFFLE_DEVELOP_PORT=8545 -ti truffle-container make start_bridge
 ```
 
 3. in first
