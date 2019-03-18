@@ -7,7 +7,7 @@
 ```
 git clone --single-branch --branch tmp/try-to-make-it-work https://github.com/vsmelov/MARKETProtocol.git
 cd MARKETProtocol
-docker build -t my/market-protocol .
+docker build -f Dockerfile.truffle -t my/market-protocol .
 ```
 
 ### run tests
